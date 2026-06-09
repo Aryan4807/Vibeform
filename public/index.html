@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibeform — Mutual NDA Creator</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <p class="eyebrow">Vibeform / Prelegal</p>
+        <h1>Mutual NDA Creator</h1>
+        <p class="subtitle">
+          Fill in the cover page details and preview your Common Paper Mutual NDA.
+        </p>
+      </div>
+      <button type="button" id="download-btn" class="primary-btn" disabled>
+        Download document
+      </button>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <h2>Agreement details</h2>
+        <form id="nda-form" novalidate>
+          <fieldset>
+            <legend>General</legend>
+            <label for="purpose">Purpose</label>
+            <textarea id="purpose" name="purpose" rows="3" required></textarea>
+
+            <label for="effectiveDate">Effective date</label>
+            <input id="effectiveDate" name="effectiveDate" type="date" required />
+          </fieldset>
+
+          <fieldset>
+            <legend>Term</legend>
+            <label for="mndaTermYears">MNDA term (years)</label>
+            <input id="mndaTermYears" name="mndaTermYears" type="number" min="1" max="99" />
+
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="mndaTermType" value="expires" checked />
+                Expires after selected years
+              </label>
+              <label>
+                <input type="radio" name="mndaTermType" value="continues" />
+                Continues until terminated
+              </label>
+            </div>
+
+            <label for="confidentialityYears">Confidentiality term (years)</label>
+            <input
+              id="confidentialityYears"
+              name="confidentialityYears"
+              type="number"
+              min="1"
+              max="99"
+            />
+
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="confidentialityType" value="fixed" checked />
+                Fixed term with trade secret exception
+              </label>
+              <label>
+                <input type="radio" name="confidentialityType" value="perpetuity" />
+                In perpetuity
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Governing law</legend>
+            <label for="governingLaw">Governing law (state)</label>
+            <input id="governingLaw" name="governingLaw" type="text" required />
+
+            <label for="jurisdiction">Jurisdiction</label>
+            <input
+              id="jurisdiction"
+              name="jurisdiction"
+              type="text"
+              placeholder="courts located in New Castle, DE"
+              required
+            />
+
+            <label for="modifications">MNDA modifications (optional)</label>
+            <textarea id="modifications" name="modifications" rows="2"></textarea>
+          </fieldset>
+
+          <fieldset>
+            <legend>Party 1</legend>
+            <label for="party1-name">Print name</label>
+            <input id="party1-name" name="party1-name" type="text" />
+
+            <label for="party1-title">Title</label>
+            <input id="party1-title" name="party1-title" type="text" />
+
+            <label for="party1-company">Company</label>
+            <input id="party1-company" name="party1-company" type="text" />
+
+            <label for="party1-notice">Notice address</label>
+            <input
+              id="party1-notice"
+              name="party1-notice"
+              type="text"
+              placeholder="Email or postal address"
+            />
+          </fieldset>
+
+          <fieldset>
+            <legend>Party 2</legend>
+            <label for="party2-name">Print name</label>
+            <input id="party2-name" name="party2-name" type="text" />
+
+            <label for="party2-title">Title</label>
+            <input id="party2-title" name="party2-title" type="text" />
+
+            <label for="party2-company">Company</label>
+            <input id="party2-company" name="party2-company" type="text" />
+
+            <label for="party2-notice">Notice address</label>
+            <input
+              id="party2-notice"
+              name="party2-notice"
+              type="text"
+              placeholder="Email or postal address"
+            />
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="panel preview-panel">
+        <div class="preview-header">
+          <h2>Live preview</h2>
+          <p id="preview-status">Loading templates…</p>
+        </div>
+        <article id="preview" class="document-preview" aria-live="polite"></article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Templates sourced from
+        <a href="https://github.com/CommonPaper" target="_blank" rel="noreferrer">Common Paper</a>
+        under CC BY 4.0.
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/js/templateEngine.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
