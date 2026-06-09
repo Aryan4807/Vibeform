@@ -10,6 +10,29 @@ let coverTemplate = '';
 let termsTemplate = '';
 let latestMarkdown = '';
 
+function setStatus(message, isError = false) {
+  previewStatus.textContent = message;
+  previewStatus.classList.toggle('is-error', isError);
+}
+
+function setFieldValue(id, value) {
+  const field = document.getElementById(id);
+  if (!field) {
+    throw new Error(`Missing form field: ${id}`);
+  }
+
+  field.value = value;
+}
+
+function setRadioValue(name, value) {
+  const input = form.querySelector(`input[name="${name}"][value="${value}"]`);
+  if (!input) {
+    throw new Error(`Missing radio option: ${name}=${value}`);
+  }
+
+  input.checked = true;
+}
+
 function readFormData() {
   const formData = new FormData(form);
 
@@ -41,20 +64,25 @@ function readFormData() {
 }
 
 function populateForm(defaults) {
-  form.purpose.value = defaults.purpose;
-  form.effectiveDate.value = defaults.effectiveDate;
-  form.mndaTermYears.value = defaults.mndaTermYears;
-  form.confidentialityYears.value = defaults.confidentialityYears;
-  form.governingLaw.value = defaults.governingLaw;
-  form.jurisdiction.value = defaults.jurisdiction;
-  form.modifications.value = defaults.modifications;
+  setFieldValue('purpose', defaults.purpose);
+  setFieldValue('effectiveDate', defaults.effectiveDate);
+  setFieldValue('mndaTermYears', defaults.mndaTermYears);
+  setFieldValue('confidentialityYears', defaults.confidentialityYears);
+  setFieldValue('governingLaw', defaults.governingLaw);
+  setFieldValue('jurisdiction', defaults.jurisdiction);
+  setFieldValue('modifications', defaults.modifications);
+  setRadioValue('mndaTermType', defaults.mndaTermType);
+  setRadioValue('confidentialityType', defaults.confidentialityType);
+}
 
-  form.querySelector(
-    `input[name="mndaTermType"][value="${defaults.mndaTermType}"]`,
-  ).checked = true;
-  form.querySelector(
-    `input[name="confidentialityType"][value="${defaults.confidentialityType}"]`,
-  ).checked = true;
+function renderMarkdownToHtml(markdown) {
+  if (typeof marked === 'undefined' || typeof marked.parse !== 'function') {
+    throw new Error(
+      'Markdown preview library failed to load. Start the app with `npm start` and refresh.',
+    );
+  }
+
+  return marked.parse(markdown, { async: false });
 }
 
 function updatePreview() {
@@ -62,11 +90,23 @@ function updatePreview() {
     return;
   }
 
-  const formData = readFormData();
-  latestMarkdown = renderDocument(coverTemplate, termsTemplate, formData);
-  preview.innerHTML = marked.parse(latestMarkdown);
-  previewStatus.textContent = 'Preview updated';
-  downloadBtn.disabled = false;
+  try {
+    const formData = readFormData();
+    latestMarkdown = renderDocument(coverTemplate, termsTemplate, formData);
+
+    if (!latestMarkdown.trim()) {
+      throw new Error('Generated document is empty.');
+    }
+
+    preview.innerHTML = renderMarkdownToHtml(latestMarkdown);
+    setStatus('Preview updated');
+    downloadBtn.disabled = false;
+  } catch (error) {
+    latestMarkdown = '';
+    downloadBtn.disabled = true;
+    setStatus(`Preview error: ${error.message}`, true);
+    preview.innerHTML = `<p class="preview-error">${error.message}</p>`;
+  }
 }
 
 function downloadDocument() {
@@ -85,21 +125,28 @@ function downloadDocument() {
 }
 
 async function init() {
+  if (!form || !preview || !downloadBtn) {
+    throw new Error('Application markup is missing required elements.');
+  }
+
   populateForm(DEFAULT_FORM);
 
   try {
     const templates = await loadTemplates();
     coverTemplate = templates.coverTemplate;
     termsTemplate = templates.termsTemplate;
-    previewStatus.textContent = 'Ready';
+    setStatus('Ready');
     updatePreview();
   } catch (error) {
-    previewStatus.textContent = 'Failed to load templates.';
-    preview.innerHTML = `<p>${error.message}</p>`;
+    setStatus('Failed to load templates.', true);
+    preview.innerHTML = `<p class="preview-error">${error.message}</p>`;
   }
 
   form.addEventListener('input', updatePreview);
   downloadBtn.addEventListener('click', downloadDocument);
 }
 
-init();
+init().catch((error) => {
+  setStatus('Application failed to start.', true);
+  preview.innerHTML = `<p class="preview-error">${error.message}</p>`;
+});

@@ -43,8 +43,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Verify template rendering
 
 ```bash
-node scripts/verify-template.js
+npm test
 ```
+
+This runs automated checks for:
+
+- Template placeholder substitution (including Windows CRLF templates)
+- Markdown-to-HTML preview rendering
+- Express routes for UI, templates, and local `marked` bundle
+- `catalog.json` integrity and license notice
 
 ## Project structure
 
