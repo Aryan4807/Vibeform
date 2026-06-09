@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js",
-    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js"
+    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js",
+    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js"
   },
   "engines": {
     "node": ">=18"
@@ -17,6 +17,7 @@
     "marked": "^15.0.12"
   },
   "devDependencies": {
+    "jsdom": "^29.1.1",
     "supertest": "^7.1.0"
   }
 }

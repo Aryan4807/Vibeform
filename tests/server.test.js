@@ -20,7 +20,9 @@ test('GET /vendor/marked.min.js serves local markdown renderer', async () => {
 
   assert.equal(response.status, 200);
   assert.match(response.headers['content-type'], /javascript/);
+  assert.match(response.headers['cache-control'], /no-store/);
   assert.match(response.text, /marked/);
+  assert.doesNotMatch(response.text, /^<!DOCTYPE html>/i);
 });
 
 test('GET /lib/templateEngine.js serves shared template engine', async () => {

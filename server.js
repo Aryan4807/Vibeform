@@ -8,10 +8,22 @@ const templatesDir = path.join(__dirname, 'templates');
 const libDir = path.join(__dirname, 'lib');
 const markedPath = path.join(__dirname, 'node_modules', 'marked', 'marked.min.js');
 
+app.use((req, res, next) => {
+  if (req.path.endsWith('.js') || req.path.endsWith('.md')) {
+    res.set('Cache-Control', 'no-store');
+  }
+
+  next();
+});
+
 app.use(express.static(publicDir));
 app.use('/lib', express.static(libDir));
 app.use('/templates', express.static(templatesDir));
-app.use('/vendor/marked.min.js', express.static(markedPath));
+
+app.get('/vendor/marked.min.js', (req, res) => {
+  res.type('application/javascript');
+  res.sendFile(markedPath);
+});
 
 app.get('*', (req, res, next) => {
   if (req.path.includes('.')) {
