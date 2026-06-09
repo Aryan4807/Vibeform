@@ -1,0 +1,9 @@
+# Core Philosophy
+- Write modular, testable, and highly performant code.
+- Prioritize security best practices (input validation, sanitization, secure handling of secrets).
+- Stick to standard design patterns (Dependency Injection, Single Responsibility Principle).
+
+# Structural Preferences
+- Keep functions small, focused, and pure where possible.
+- Avoid deep nesting; use guard clauses to handle edge cases early.
+- Docker & CI/CD: Ensure configurations are optimized for fast builds and minimal image sizes.

@@ -1,0 +1,23 @@
+{
+  "name": "vibeform",
+  "version": "0.1.0",
+  "description": "Legal document creator prototype for Vibeform / Prelegal",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js",
+    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "marked": "^15.0.12"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "supertest": "^7.1.0"
+  }
+}
