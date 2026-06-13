@@ -84,5 +84,15 @@
       "sourceRepo": "CommonPaper/Software-License-Agreement",
       "sourcePath": "main/Software-License-Agreement.md"
     }
+  ],
+  "creators": [
+    {
+      "id": "mutual-nda",
+      "name": "Mutual Non-Disclosure Agreement",
+      "description": "Fill in cover page details, preview the completed agreement, and download as PDF or Markdown.",
+      "path": "/nda",
+      "coverFilename": "Mutual-NDA-coverpage.md",
+      "termsFilename": "Mutual-NDA.md"
+    }
   ]
 }

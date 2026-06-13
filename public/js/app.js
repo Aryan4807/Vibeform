@@ -27,15 +27,7 @@
   }
 
   function resolvePdfExporter() {
-    if (typeof html2pdf === 'function') {
-      return html2pdf;
-    }
-
-    if (typeof window !== 'undefined' && typeof window.html2pdf === 'function') {
-      return window.html2pdf;
-    }
-
-    return null;
+    return window.VibeformShared?.resolvePdfExporter?.() || null;
   }
 
   function warnIfPdfLibraryMissing() {
@@ -126,19 +118,7 @@
   }
 
   function renderMarkdownToHtml(markdown) {
-    if (typeof marked === 'undefined' || typeof marked.parse !== 'function') {
-      throw new Error(
-        'Markdown preview library failed to load. Hard-refresh (Ctrl+Shift+R) or restart with `npm start`.',
-      );
-    }
-
-    const html = marked.parse(markdown, { async: false });
-
-    if (html && typeof html.then === 'function') {
-      throw new Error('Markdown preview returned an async result. Please refresh the page.');
-    }
-
-    return html;
+    return window.VibeformShared.renderMarkdownToHtml(markdown);
   }
 
   function updatePreview(engine) {
@@ -171,13 +151,7 @@
     }
 
     const formData = readFormData(engine.DEFAULT_FORM);
-    const blob = new Blob([latestMarkdown], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = engine.buildDownloadFilename(formData);
-    link.click();
-    URL.revokeObjectURL(url);
+    window.VibeformShared.downloadMarkdownFile(latestMarkdown, engine.buildDownloadFilename(formData));
     setStatus('Markdown downloaded');
   }
 
@@ -198,16 +172,10 @@
       setStatus('Generating PDF…');
       setDownloadEnabled(false);
 
-      await pdfExporter()
-        .from(preview)
-        .set({
-          filename: engine.buildPdfFilename(formData),
-          margin: [10, 10, 10, 10],
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
-        })
-        .save();
+      await window.VibeformShared.downloadPdfFromPreview(
+        preview,
+        engine.buildPdfFilename(formData),
+      );
 
       setStatus('PDF downloaded');
     } catch (error) {
@@ -225,6 +193,12 @@
     if (!window.TemplateEngine) {
       throw new Error(
         'Template engine failed to load. Hard-refresh (Ctrl+Shift+R) or restart with `npm start`.',
+      );
+    }
+
+    if (!window.VibeformShared) {
+      throw new Error(
+        'Shared client utilities failed to load. Hard-refresh (Ctrl+Shift+R) or restart with `npm start`.',
       );
     }
 

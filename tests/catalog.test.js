@@ -11,6 +11,8 @@ test('catalog.json contains the mutual NDA templates used by the app', () => {
 
   assert.ok(Array.isArray(catalog.templates));
   assert.ok(catalog.templates.length >= 12);
+  assert.ok(Array.isArray(catalog.creators));
+  assert.ok(catalog.creators.length >= 1);
 
   const filenames = catalog.templates.map((entry) => entry.filename);
   assert.ok(filenames.includes('Mutual-NDA.md'));

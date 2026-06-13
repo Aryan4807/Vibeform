@@ -10,8 +10,8 @@
     "sync-vendor": "node scripts/sync-vendor.js",
     "prestart": "node scripts/sync-vendor.js",
     "postinstall": "node scripts/sync-vendor.js",
-    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js tests/sync-vendor.test.js",
-    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js tests/sync-vendor.test.js"
+    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/catalog-lib.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js tests/sync-vendor.test.js",
+    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/catalog-lib.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js tests/sync-vendor.test.js"
   },
   "engines": {
     "node": ">=18"

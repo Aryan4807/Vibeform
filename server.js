@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { syncVendorAssets, vendorDir } = require('./scripts/sync-vendor');
+const { loadCatalog, findTemplate } = require('./lib/catalog');
 
 syncVendorAssets();
 
@@ -26,6 +27,27 @@ app.get('/vendor/marked.min.js', (req, res) => {
 app.get('/vendor/html2pdf.bundle.min.js', (req, res) => {
   res.type('application/javascript');
   res.sendFile(path.join(vendorDir, 'html2pdf.bundle.min.js'));
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+app.get('/api/catalog', (req, res) => {
+  res.json(loadCatalog());
+});
+
+app.get('/nda', (req, res) => {
+  res.sendFile(path.join(publicDir, 'nda.html'));
+});
+
+app.get('/view/:filename', (req, res) => {
+  const template = findTemplate(req.params.filename);
+  if (!template) {
+    return res.status(404).type('text/plain').send('Template not found');
+  }
+
+  res.sendFile(path.join(publicDir, 'view.html'));
 });
 
 app.use(express.static(publicDir));

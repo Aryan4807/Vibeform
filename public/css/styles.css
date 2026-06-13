@@ -243,6 +243,84 @@ textarea {
   font-size: 0.92rem;
 }
 
+.text-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+.catalog-header {
+  align-items: flex-end;
+}
+
+.catalog-layout {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  width: min(1280px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.section-heading {
+  margin-bottom: 1.25rem;
+}
+
+.section-copy {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.catalog-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem;
+  background: #fcfcfc;
+}
+
+.catalog-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.catalog-card-copy {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.catalog-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.view-layout {
+  padding-bottom: 2rem;
+}
+
+.view-layout .preview-panel {
+  width: min(1280px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
 @media (max-width: 960px) {
   .site-header,
   .layout {
