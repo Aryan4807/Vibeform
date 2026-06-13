@@ -25,6 +25,18 @@ test('each catalog entry includes required metadata fields', () => {
     assert.ok(entry.description, `missing description for ${entry.filename}`);
     assert.ok(entry.filename, 'missing filename');
     assert.match(entry.filename, /\.md$/);
+    assert.ok(entry.sourceRepo, `missing sourceRepo for ${entry.filename}`);
+    assert.ok(entry.sourcePath, `missing sourcePath for ${entry.filename}`);
+    assert.match(entry.sourceRepo, /^CommonPaper\//);
+  });
+});
+
+test('each catalog entry maps to an on-disk template file', () => {
+  const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+
+  catalog.templates.forEach((entry) => {
+    const filePath = path.join(templatesDir, entry.filename);
+    assert.ok(fs.existsSync(filePath), `missing template file: ${entry.filename}`);
   });
 });
 

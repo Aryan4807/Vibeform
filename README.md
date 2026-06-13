@@ -14,7 +14,8 @@ Vibeform helps users generate legal documents from curated Common Paper template
 |------|--------|
 | Project | **In progress** |
 | Template dataset (KAN-2) | Done |
-| Mutual NDA creator prototype (KAN-4) | In review |
+| Template download pipeline (KAN-3) | Done |
+| Mutual NDA creator prototype (KAN-4) | Done |
 | Deployment | Not configured |
 
 ## Features
@@ -51,21 +52,33 @@ This runs automated checks for:
 - Template placeholder substitution (including Windows CRLF templates)
 - Markdown-to-HTML preview rendering
 - Express routes for UI, templates, and local `marked` bundle
-- `catalog.json` integrity and license notice
+- `catalog.json` integrity, source provenance, and license notice
+- Reproducible CommonPaper template download manifest
+
+### Refresh templates
+
+`catalog.json` is the source of truth for template metadata and upstream provenance (`sourceRepo`, `sourcePath`). To re-download all markdown files from Common Paper:
+
+```bash
+npm run download-templates
+```
+
+This writes 12 templates into `templates/` using the URLs defined in the catalog.
 
 ## Project structure
 
 ```
-templates/          Common Paper markdown templates (from KAN-2)
-catalog.json        Template metadata catalog
+templates/          Common Paper markdown templates (from KAN-2 / KAN-3)
+catalog.json        Template metadata and download provenance
 public/             Web UI (form, preview, download)
 server.js           Express static file server
-scripts/            Utility scripts
+scripts/            Utility scripts (download-templates.js)
 ```
 
 ## Roadmap
 
 - [x] Curate CommonPaper legal templates (KAN-2)
+- [x] Add reproducible template download pipeline (KAN-3)
 - [x] Prototype Mutual NDA creator (KAN-4)
 - [ ] Add PDF export
 - [ ] Support additional agreement types from catalog
@@ -79,6 +92,7 @@ Contributions are welcome while the project is in progress. Please open an issue
 
 - [Repository](https://github.com/Aryan4807/Vibeform)
 - [Issues](https://github.com/Aryan4807/Vibeform/issues)
+- [KAN-3 — Template download pipeline](https://agg4807.atlassian.net/browse/KAN-3)
 - [KAN-4 — Mutual NDA prototype](https://agg4807.atlassian.net/browse/KAN-4)
 
 ## License
