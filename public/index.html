@@ -15,9 +15,14 @@
           Fill in the cover page details and preview your Common Paper Mutual NDA.
         </p>
       </div>
-      <button type="button" id="download-btn" class="primary-btn" disabled>
-        Download document
-      </button>
+      <div class="header-actions">
+        <button type="button" id="download-pdf-btn" class="primary-btn" disabled>
+          Download PDF
+        </button>
+        <button type="button" id="download-md-btn" class="secondary-btn" disabled>
+          Download Markdown
+        </button>
+      </div>
     </header>
 
     <main class="layout">
@@ -147,8 +152,9 @@
       </p>
     </footer>
 
-    <script src="/vendor/marked.min.js?v=2"></script>
-    <script src="/lib/templateEngine.js?v=2"></script>
-    <script src="/js/app.js?v=2"></script>
+    <script src="/vendor/marked.min.js?v=3"></script>
+    <script src="/vendor/html2pdf.bundle.min.js?v=3"></script>
+    <script src="/lib/templateEngine.js?v=3"></script>
+    <script src="/js/app.js?v=3"></script>
   </body>
 </html>

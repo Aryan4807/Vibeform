@@ -106,6 +106,13 @@ test('buildDownloadFilename slugifies company names and includes date', () => {
   );
 });
 
+test('buildPdfFilename uses the same basename with a pdf extension', () => {
+  assert.equal(
+    engine.buildPdfFilename(sampleForm),
+    'Mutual-NDA-acme-corp-beta-llc-2026-06-09.pdf',
+  );
+});
+
 test('rendered markdown converts to non-empty HTML preview', () => {
   const markdown = engine.renderDocument(coverTemplate, termsTemplate, sampleForm);
   const html = marked.parse(markdown, { async: false });

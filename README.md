@@ -6,7 +6,7 @@ A legal document creator prototype for the Prelegal project — starting with a 
 
 ## About
 
-Vibeform helps users generate legal documents from curated Common Paper templates. The first prototype (KAN-4) is a web app where users fill in cover page details, preview the completed Mutual NDA, and download it as Markdown.
+Vibeform helps users generate legal documents from curated Common Paper templates. The Mutual NDA creator (KAN-4) lets users fill in cover page details, preview the completed agreement, and download it as **PDF** or Markdown.
 
 ## Project status
 
@@ -16,13 +16,14 @@ Vibeform helps users generate legal documents from curated Common Paper template
 | Template dataset (KAN-2) | Done |
 | Template download pipeline (KAN-3) | Done |
 | Mutual NDA creator prototype (KAN-4) | Done |
+| PDF export (KAN-5) | Done |
 | Deployment | Not configured |
 
 ## Features
 
 - Form-driven cover page input (purpose, dates, terms, governing law, parties)
 - Live preview of the filled Mutual NDA (cover page + standard terms)
-- Download completed document as a local `.md` file
+- Download completed document as **PDF** or Markdown (`.md`)
 
 ## Getting started
 
@@ -80,7 +81,7 @@ scripts/            Utility scripts (download-templates.js)
 - [x] Curate CommonPaper legal templates (KAN-2)
 - [x] Add reproducible template download pipeline (KAN-3)
 - [x] Prototype Mutual NDA creator (KAN-4)
-- [ ] Add PDF export
+- [x] Add PDF export (KAN-5)
 - [ ] Support additional agreement types from catalog
 - [ ] Add tests and deployment workflow
 
@@ -94,6 +95,7 @@ Contributions are welcome while the project is in progress. Please open an issue
 - [Issues](https://github.com/Aryan4807/Vibeform/issues)
 - [KAN-3 — Template download pipeline](https://agg4807.atlassian.net/browse/KAN-3)
 - [KAN-4 — Mutual NDA prototype](https://agg4807.atlassian.net/browse/KAN-4)
+- [KAN-5 — PDF export](https://agg4807.atlassian.net/browse/KAN-5)
 
 ## License
 

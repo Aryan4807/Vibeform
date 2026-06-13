@@ -12,7 +12,10 @@ test('GET / serves the NDA creator page', async () => {
   assert.equal(response.status, 200);
   assert.match(response.text, /Mutual NDA Creator/);
   assert.match(response.text, /\/vendor\/marked\.min\.js/);
+  assert.match(response.text, /\/vendor\/html2pdf\.bundle\.min\.js/);
   assert.match(response.text, /\/lib\/templateEngine\.js/);
+  assert.match(response.text, /download-pdf-btn/);
+  assert.match(response.text, /download-md-btn/);
 });
 
 test('GET /vendor/marked.min.js serves local markdown renderer', async () => {
@@ -22,6 +25,16 @@ test('GET /vendor/marked.min.js serves local markdown renderer', async () => {
   assert.match(response.headers['content-type'], /javascript/);
   assert.match(response.headers['cache-control'], /no-store/);
   assert.match(response.text, /marked/);
+  assert.doesNotMatch(response.text, /^<!DOCTYPE html>/i);
+});
+
+test('GET /vendor/html2pdf.bundle.min.js serves local PDF renderer', async () => {
+  const response = await request(app).get('/vendor/html2pdf.bundle.min.js');
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers['content-type'], /javascript/);
+  assert.match(response.headers['cache-control'], /no-store/);
+  assert.match(response.text, /html2pdf/);
   assert.doesNotMatch(response.text, /^<!DOCTYPE html>/i);
 });
 
