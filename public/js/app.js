@@ -26,13 +26,42 @@
     }
   }
 
+  function resolvePdfExporter() {
+    if (typeof html2pdf === 'function') {
+      return html2pdf;
+    }
+
+    if (typeof window !== 'undefined' && typeof window.html2pdf === 'function') {
+      return window.html2pdf;
+    }
+
+    return null;
+  }
+
+  function warnIfPdfLibraryMissing() {
+    if (resolvePdfExporter()) {
+      return;
+    }
+
+    if (downloadPdfBtn) {
+      downloadPdfBtn.disabled = true;
+      downloadPdfBtn.title =
+        'PDF library failed to load. Stop any old server on port 3000, run npm start, then hard-refresh.';
+    }
+
+    setStatus(
+      'PDF export unavailable — stop the old server, run `npm start`, then hard-refresh (Ctrl+Shift+R).',
+      true,
+    );
+  }
+
   function setDownloadEnabled(enabled) {
     if (downloadMdBtn) {
       downloadMdBtn.disabled = !enabled;
     }
 
     if (downloadPdfBtn) {
-      downloadPdfBtn.disabled = !enabled;
+      downloadPdfBtn.disabled = !enabled || !resolvePdfExporter();
     }
   }
 
@@ -157,11 +186,9 @@
       return;
     }
 
-    if (typeof html2pdf !== 'function') {
-      setStatus(
-        'PDF library failed to load. Hard-refresh (Ctrl+Shift+R) or restart with `npm start`.',
-        true,
-      );
+    const pdfExporter = resolvePdfExporter();
+    if (!pdfExporter) {
+      warnIfPdfLibraryMissing();
       return;
     }
 
@@ -171,7 +198,7 @@
       setStatus('Generating PDF…');
       setDownloadEnabled(false);
 
-      await html2pdf()
+      await pdfExporter()
         .from(preview)
         .set({
           filename: engine.buildPdfFilename(formData),
@@ -216,6 +243,7 @@
 
     setStatus('Ready');
     updatePreview(engine);
+    warnIfPdfLibraryMissing();
 
     form.addEventListener('input', () => updatePreview(engine));
     downloadMdBtn.addEventListener('click', () => downloadMarkdown(engine));
