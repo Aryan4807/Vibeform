@@ -2,7 +2,8 @@
   const form = document.getElementById('nda-form');
   const preview = document.getElementById('preview');
   const previewStatus = document.getElementById('preview-status');
-  const downloadBtn = document.getElementById('download-btn');
+  const downloadMdBtn = document.getElementById('download-md-btn');
+  const downloadPdfBtn = document.getElementById('download-pdf-btn');
 
   let coverTemplate = '';
   let termsTemplate = '';
@@ -22,6 +23,16 @@
 
     if (preview) {
       preview.innerHTML = `<p class="preview-error">${message}</p>`;
+    }
+  }
+
+  function setDownloadEnabled(enabled) {
+    if (downloadMdBtn) {
+      downloadMdBtn.disabled = !enabled;
+    }
+
+    if (downloadPdfBtn) {
+      downloadPdfBtn.disabled = !enabled;
     }
   }
 
@@ -116,16 +127,16 @@
 
       preview.innerHTML = renderMarkdownToHtml(latestMarkdown);
       setStatus('Preview updated');
-      downloadBtn.disabled = false;
+      setDownloadEnabled(true);
     } catch (error) {
       latestMarkdown = '';
-      downloadBtn.disabled = true;
+      setDownloadEnabled(false);
       setStatus(`Preview error: ${error.message}`, true);
       preview.innerHTML = `<p class="preview-error">${error.message}</p>`;
     }
   }
 
-  function downloadDocument(engine) {
+  function downloadMarkdown(engine) {
     if (!latestMarkdown) {
       return;
     }
@@ -138,10 +149,49 @@
     link.download = engine.buildDownloadFilename(formData);
     link.click();
     URL.revokeObjectURL(url);
+    setStatus('Markdown downloaded');
+  }
+
+  async function downloadPdf(engine) {
+    if (!latestMarkdown || !preview?.innerHTML.trim()) {
+      return;
+    }
+
+    if (typeof html2pdf !== 'function') {
+      setStatus(
+        'PDF library failed to load. Hard-refresh (Ctrl+Shift+R) or restart with `npm start`.',
+        true,
+      );
+      return;
+    }
+
+    const formData = readFormData(engine.DEFAULT_FORM);
+
+    try {
+      setStatus('Generating PDF…');
+      setDownloadEnabled(false);
+
+      await html2pdf()
+        .from(preview)
+        .set({
+          filename: engine.buildPdfFilename(formData),
+          margin: [10, 10, 10, 10],
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+        })
+        .save();
+
+      setStatus('PDF downloaded');
+    } catch (error) {
+      setStatus(`PDF error: ${error.message}`, true);
+    } finally {
+      setDownloadEnabled(Boolean(latestMarkdown));
+    }
   }
 
   async function start() {
-    if (!form || !preview || !downloadBtn) {
+    if (!form || !preview || !downloadMdBtn || !downloadPdfBtn) {
       throw new Error('Application markup is missing required elements.');
     }
 
@@ -154,6 +204,7 @@
     const engine = window.TemplateEngine;
     populateForm(engine.DEFAULT_FORM);
     setStatus('Loading templates…');
+    setDownloadEnabled(false);
 
     const templates = await engine.loadTemplates();
     coverTemplate = templates.coverTemplate;
@@ -167,7 +218,8 @@
     updatePreview(engine);
 
     form.addEventListener('input', () => updatePreview(engine));
-    downloadBtn.addEventListener('click', () => downloadDocument(engine));
+    downloadMdBtn.addEventListener('click', () => downloadMarkdown(engine));
+    downloadPdfBtn.addEventListener('click', () => downloadPdf(engine));
   }
 
   start().catch((error) => {

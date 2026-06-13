@@ -69,10 +69,12 @@ test('browser startup renders preview HTML from live asset pipeline', async () =
 test('index.html loads client scripts in dependency order', async () => {
   const response = await request(app).get('/');
   const markedIndex = response.text.indexOf('/vendor/marked.min.js');
+  const pdfIndex = response.text.indexOf('/vendor/html2pdf.bundle.min.js');
   const engineIndex = response.text.indexOf('/lib/templateEngine.js');
   const appIndex = response.text.indexOf('/js/app.js');
 
   assert.ok(markedIndex >= 0);
-  assert.ok(engineIndex > markedIndex);
+  assert.ok(pdfIndex > markedIndex);
+  assert.ok(engineIndex > pdfIndex);
   assert.ok(appIndex > engineIndex);
 });
