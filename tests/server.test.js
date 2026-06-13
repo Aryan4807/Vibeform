@@ -6,16 +6,60 @@ const request = require('supertest');
 
 const app = require('../server');
 
-test('GET / serves the NDA creator page', async () => {
+test('GET / serves the template catalog page', async () => {
   const response = await request(app).get('/');
+
+  assert.equal(response.status, 200);
+  assert.match(response.text, /Common Paper Template Catalog/);
+  assert.match(response.text, /\/js\/catalog\.js/);
+  assert.match(response.text, /creator-grid/);
+  assert.match(response.text, /template-grid/);
+});
+
+test('GET /nda serves the Mutual NDA creator page', async () => {
+  const response = await request(app).get('/nda');
 
   assert.equal(response.status, 200);
   assert.match(response.text, /Mutual NDA Creator/);
   assert.match(response.text, /\/vendor\/marked\.min\.js/);
   assert.match(response.text, /\/vendor\/html2pdf\.bundle\.min\.js/);
   assert.match(response.text, /\/lib\/templateEngine\.js/);
+  assert.match(response.text, /\/js\/shared\.js/);
   assert.match(response.text, /download-pdf-btn/);
   assert.match(response.text, /download-md-btn/);
+});
+
+test('GET /view/:filename serves the template preview shell for catalog entries', async () => {
+  const response = await request(app).get('/view/CSA.md');
+
+  assert.equal(response.status, 200);
+  assert.match(response.text, /Template Preview/);
+  assert.match(response.text, /\/js\/template-view\.js/);
+});
+
+test('GET /view/:filename returns 404 for unknown templates', async () => {
+  const response = await request(app).get('/view/not-in-catalog.md');
+
+  assert.equal(response.status, 404);
+});
+
+test('GET /api/catalog returns catalog metadata as JSON', async () => {
+  const response = await request(app).get('/api/catalog');
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers['content-type'], /json/);
+
+  const catalog = response.body;
+  assert.ok(Array.isArray(catalog.templates));
+  assert.ok(Array.isArray(catalog.creators));
+  assert.ok(catalog.templates.some((entry) => entry.filename === 'DPA.md'));
+});
+
+test('GET /health returns ok status', async () => {
+  const response = await request(app).get('/health');
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(response.body, { status: 'ok' });
 });
 
 test('GET /vendor/marked.min.js serves local markdown renderer', async () => {

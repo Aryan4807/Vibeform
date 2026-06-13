@@ -3,144 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibeform — Mutual NDA Creator</title>
+    <title>Vibeform — Legal Template Catalog</title>
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header catalog-header">
       <div class="brand">
         <p class="eyebrow">Vibeform / Prelegal</p>
-        <h1>Mutual NDA Creator</h1>
+        <h1>Common Paper Template Catalog</h1>
         <p class="subtitle">
-          Fill in the cover page details and preview your Common Paper Mutual NDA.
+          Browse curated legal agreement templates. Customize the Mutual NDA or preview and download
+          any standard terms document.
         </p>
-      </div>
-      <div class="header-actions">
-        <button type="button" id="download-pdf-btn" class="primary-btn" disabled>
-          Download PDF
-        </button>
-        <button type="button" id="download-md-btn" class="secondary-btn" disabled>
-          Download Markdown
-        </button>
       </div>
     </header>
 
-    <main class="layout">
-      <section class="panel form-panel">
-        <h2>Agreement details</h2>
-        <form id="nda-form" novalidate>
-          <fieldset>
-            <legend>General</legend>
-            <label for="purpose">Purpose</label>
-            <textarea id="purpose" name="purpose" rows="3" required></textarea>
-
-            <label for="effectiveDate">Effective date</label>
-            <input id="effectiveDate" name="effectiveDate" type="date" required />
-          </fieldset>
-
-          <fieldset>
-            <legend>Term</legend>
-            <label for="mndaTermYears">MNDA term (years)</label>
-            <input id="mndaTermYears" name="mndaTermYears" type="number" min="1" max="99" />
-
-            <div class="radio-group">
-              <label>
-                <input type="radio" name="mndaTermType" value="expires" checked />
-                Expires after selected years
-              </label>
-              <label>
-                <input type="radio" name="mndaTermType" value="continues" />
-                Continues until terminated
-              </label>
-            </div>
-
-            <label for="confidentialityYears">Confidentiality term (years)</label>
-            <input
-              id="confidentialityYears"
-              name="confidentialityYears"
-              type="number"
-              min="1"
-              max="99"
-            />
-
-            <div class="radio-group">
-              <label>
-                <input type="radio" name="confidentialityType" value="fixed" checked />
-                Fixed term with trade secret exception
-              </label>
-              <label>
-                <input type="radio" name="confidentialityType" value="perpetuity" />
-                In perpetuity
-              </label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Governing law</legend>
-            <label for="governingLaw">Governing law (state)</label>
-            <input id="governingLaw" name="governingLaw" type="text" required />
-
-            <label for="jurisdiction">Jurisdiction</label>
-            <input
-              id="jurisdiction"
-              name="jurisdiction"
-              type="text"
-              placeholder="courts located in New Castle, DE"
-              required
-            />
-
-            <label for="modifications">MNDA modifications (optional)</label>
-            <textarea id="modifications" name="modifications" rows="2"></textarea>
-          </fieldset>
-
-          <fieldset>
-            <legend>Party 1</legend>
-            <label for="party1-name">Print name</label>
-            <input id="party1-name" name="party1-name" type="text" />
-
-            <label for="party1-title">Title</label>
-            <input id="party1-title" name="party1-title" type="text" />
-
-            <label for="party1-company">Company</label>
-            <input id="party1-company" name="party1-company" type="text" />
-
-            <label for="party1-notice">Notice address</label>
-            <input
-              id="party1-notice"
-              name="party1-notice"
-              type="text"
-              placeholder="Email or postal address"
-            />
-          </fieldset>
-
-          <fieldset>
-            <legend>Party 2</legend>
-            <label for="party2-name">Print name</label>
-            <input id="party2-name" name="party2-name" type="text" />
-
-            <label for="party2-title">Title</label>
-            <input id="party2-title" name="party2-title" type="text" />
-
-            <label for="party2-company">Company</label>
-            <input id="party2-company" name="party2-company" type="text" />
-
-            <label for="party2-notice">Notice address</label>
-            <input
-              id="party2-notice"
-              name="party2-notice"
-              type="text"
-              placeholder="Email or postal address"
-            />
-          </fieldset>
-        </form>
+    <main class="catalog-layout">
+      <section class="panel">
+        <div class="section-heading">
+          <h2>Interactive creators</h2>
+          <p class="section-copy">Fill in details, preview live, and export completed documents.</p>
+        </div>
+        <div id="creator-grid" class="card-grid" aria-live="polite"></div>
       </section>
 
-      <section class="panel preview-panel">
-        <div class="preview-header">
-          <h2>Live preview</h2>
-          <p id="preview-status">Loading templates…</p>
+      <section class="panel">
+        <div class="section-heading">
+          <h2>Standard agreements</h2>
+          <p class="section-copy">Preview Common Paper standard terms and download as PDF or Markdown.</p>
         </div>
-        <article id="preview" class="document-preview" aria-live="polite"></article>
+        <div id="template-grid" class="card-grid" aria-live="polite"></div>
       </section>
     </main>
 
@@ -152,9 +44,6 @@
       </p>
     </footer>
 
-    <script src="/vendor/marked.min.js?v=4"></script>
-    <script src="/vendor/html2pdf.bundle.min.js?v=4"></script>
-    <script src="/lib/templateEngine.js?v=4"></script>
-    <script src="/js/app.js?v=4"></script>
+    <script src="/js/catalog.js?v=5"></script>
   </body>
 </html>

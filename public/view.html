@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibeform — Template Preview</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <p class="eyebrow"><a href="/" class="text-link">← Template catalog</a></p>
+        <h1 id="template-title">Template preview</h1>
+        <p id="template-description" class="subtitle"></p>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="download-pdf-btn" class="primary-btn" disabled>
+          Download PDF
+        </button>
+        <button type="button" id="download-md-btn" class="secondary-btn" disabled>
+          Download Markdown
+        </button>
+      </div>
+    </header>
+
+    <main class="view-layout">
+      <section class="panel preview-panel">
+        <div class="preview-header">
+          <h2>Preview</h2>
+          <p id="preview-status">Loading template…</p>
+        </div>
+        <article id="preview" class="document-preview" aria-live="polite"></article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Templates sourced from
+        <a href="https://github.com/CommonPaper" target="_blank" rel="noreferrer">Common Paper</a>
+        under CC BY 4.0.
+      </p>
+    </footer>
+
+    <script src="/vendor/marked.min.js?v=5"></script>
+    <script src="/vendor/html2pdf.bundle.min.js?v=5"></script>
+    <script src="/js/shared.js?v=5"></script>
+    <script src="/js/template-view.js?v=5"></script>
+  </body>
+</html>

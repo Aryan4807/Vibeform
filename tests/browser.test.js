@@ -66,15 +66,17 @@ test('browser startup renders preview HTML from live asset pipeline', async () =
   assert.match(html, /Mutual Non-Disclosure Agreement/);
 });
 
-test('index.html loads client scripts in dependency order', async () => {
-  const response = await request(app).get('/');
+test('index.html loads client scripts in dependency order on /nda', async () => {
+  const response = await request(app).get('/nda');
   const markedIndex = response.text.indexOf('/vendor/marked.min.js');
   const pdfIndex = response.text.indexOf('/vendor/html2pdf.bundle.min.js');
+  const sharedIndex = response.text.indexOf('/js/shared.js');
   const engineIndex = response.text.indexOf('/lib/templateEngine.js');
   const appIndex = response.text.indexOf('/js/app.js');
 
   assert.ok(markedIndex >= 0);
   assert.ok(pdfIndex > markedIndex);
   assert.ok(engineIndex > pdfIndex);
-  assert.ok(appIndex > engineIndex);
+  assert.ok(sharedIndex > engineIndex);
+  assert.ok(appIndex > sharedIndex);
 });
