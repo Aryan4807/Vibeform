@@ -37,6 +37,26 @@
     URL.revokeObjectURL(url);
   }
 
+  function createPdfExportNode(previewElement) {
+    const clone = previewElement.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.classList.add('pdf-export-clone');
+
+    Object.assign(clone.style, {
+      position: 'fixed',
+      left: '-10000px',
+      top: '0',
+      maxHeight: 'none',
+      height: 'auto',
+      overflow: 'visible',
+      width: `${previewElement.scrollWidth}px`,
+      zIndex: '-1',
+    });
+
+    document.body.appendChild(clone);
+    return clone;
+  }
+
   async function downloadPdfFromPreview(previewElement, filename) {
     const pdfExporter = resolvePdfExporter();
     if (!pdfExporter) {
@@ -45,16 +65,30 @@
       );
     }
 
-    await pdfExporter()
-      .from(previewElement)
-      .set({
-        filename,
-        margin: [10, 10, 10, 10],
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
-      })
-      .save();
+    const exportNode = createPdfExportNode(previewElement);
+
+    try {
+      await pdfExporter()
+        .from(exportNode)
+        .set({
+          filename,
+          margin: [10, 10, 10, 10],
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: exportNode.scrollWidth,
+            windowHeight: exportNode.scrollHeight,
+          },
+          jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+          pagebreak: { mode: ['css', 'legacy'] },
+        })
+        .save();
+    } finally {
+      exportNode.remove();
+    }
   }
 
   function buildTemplateDownloadName(filename, extension) {

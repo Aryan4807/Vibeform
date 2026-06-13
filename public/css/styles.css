@@ -237,6 +237,11 @@ textarea {
   vertical-align: top;
 }
 
+.pdf-export-clone {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
 .site-footer {
   padding: 0 0 2rem;
   color: var(--muted);
