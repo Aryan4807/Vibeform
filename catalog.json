@@ -3,62 +3,86 @@
     {
       "name": "Mutual Non-Disclosure Agreement",
       "description": "Common Paper standard mutual NDA for sharing confidential information between two parties.",
-      "filename": "Mutual-NDA.md"
+      "filename": "Mutual-NDA.md",
+      "sourceRepo": "CommonPaper/Mutual-NDA",
+      "sourcePath": "main/Mutual-NDA.md"
     },
     {
       "name": "Mutual NDA Cover Page",
       "description": "Cover page template for the Common Paper Mutual Non-Disclosure Agreement.",
-      "filename": "Mutual-NDA-coverpage.md"
+      "filename": "Mutual-NDA-coverpage.md",
+      "sourceRepo": "CommonPaper/Mutual-NDA",
+      "sourcePath": "main/Mutual-NDA-coverpage.md"
     },
     {
       "name": "Cloud Service Agreement",
       "description": "Common Paper standard Cloud Service Agreement for SaaS and cloud software providers.",
-      "filename": "CSA.md"
+      "filename": "CSA.md",
+      "sourceRepo": "CommonPaper/CSA",
+      "sourcePath": "main/CSA.md"
     },
     {
       "name": "Data Processing Agreement",
       "description": "Common Paper Data Processing Agreement for handling personal data on behalf of customers.",
-      "filename": "DPA.md"
+      "filename": "DPA.md",
+      "sourceRepo": "CommonPaper/DPA",
+      "sourcePath": "main/DPA.md"
     },
     {
       "name": "Design Partner Agreement",
       "description": "Common Paper standard Design Partner Agreement for early-access product collaborations.",
-      "filename": "design-partner-agreement.md"
+      "filename": "design-partner-agreement.md",
+      "sourceRepo": "CommonPaper/Design-Partner-Agreement",
+      "sourcePath": "main/design-partner-agreement.md"
     },
     {
       "name": "AI Addendum",
       "description": "Common Paper Standard AI Addendum covering AI-specific terms for software agreements.",
-      "filename": "AI-Addendum.md"
+      "filename": "AI-Addendum.md",
+      "sourceRepo": "CommonPaper/AI-Addendum",
+      "sourcePath": "main/AI-Addendum.md"
     },
     {
       "name": "Pilot Agreement",
       "description": "Common Paper standard Pilot Agreement for limited product trials and evaluations.",
-      "filename": "Pilot-Agreement.md"
+      "filename": "Pilot-Agreement.md",
+      "sourceRepo": "CommonPaper/Pilot-Agreement",
+      "sourcePath": "main/Pilot-Agreement.md"
     },
     {
       "name": "Professional Services Agreement",
       "description": "Common Paper standard Professional Services Agreement for consulting and implementation work.",
-      "filename": "psa.md"
+      "filename": "psa.md",
+      "sourceRepo": "CommonPaper/PSA",
+      "sourcePath": "main/psa.md"
     },
     {
       "name": "Partnership Agreement",
       "description": "Common Paper standard Partnership Agreement for business partnerships and collaborations.",
-      "filename": "Partnership-Agreement.md"
+      "filename": "Partnership-Agreement.md",
+      "sourceRepo": "CommonPaper/Partnership-Agreement",
+      "sourcePath": "main/Partnership-Agreement.md"
     },
     {
       "name": "Business Associate Agreement",
       "description": "Common Paper standard Business Associate Agreement for HIPAA-covered healthcare data.",
-      "filename": "BAA.md"
+      "filename": "BAA.md",
+      "sourceRepo": "CommonPaper/BAA",
+      "sourcePath": "main/BAA.md"
     },
     {
       "name": "Service Level Agreement",
       "description": "Common Paper Service Level Agreement defining uptime and support commitments.",
-      "filename": "sla.md"
+      "filename": "sla.md",
+      "sourceRepo": "CommonPaper/SLA",
+      "sourcePath": "main/sla.md"
     },
     {
       "name": "Software License Agreement",
       "description": "Common Paper standard Software License Agreement for on-premises software licensing.",
-      "filename": "Software-License-Agreement.md"
+      "filename": "Software-License-Agreement.md",
+      "sourceRepo": "CommonPaper/Software-License-Agreement",
+      "sourcePath": "main/Software-License-Agreement.md"
     }
   ]
 }

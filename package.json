@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js",
-    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js"
+    "download-templates": "node scripts/download-templates.js",
+    "test": "node --test tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js",
+    "test:watch": "node --test --watch tests/templateEngine.test.js tests/server.test.js tests/catalog.test.js tests/preview.test.js tests/browser.test.js tests/download-templates.test.js"
   },
   "engines": {
     "node": ">=18"
