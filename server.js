@@ -63,8 +63,19 @@ app.get('*', (req, res, next) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`Vibeform running at http://localhost:${PORT}`);
+  });
+
+  server.on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+      console.error(
+        `Port ${PORT} is already in use. Stop the old server or run \`npm start\` again to auto-free the port.`,
+      );
+      process.exit(1);
+    }
+
+    throw error;
   });
 }
 
